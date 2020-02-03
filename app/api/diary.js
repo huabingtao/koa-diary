@@ -8,6 +8,7 @@ const { NotFound } = require('../../core/http-exception')
 const { success } = require('../lib/helper')
 const { User } = require('../models/user')
 const { Diary } = require('../models/diary')
+const { formatDate } = require('../lib/helper')
 
 const router = new Router({
   prefix: '/diary'
@@ -42,6 +43,7 @@ router.get('/:id', async ctx => {
   if (!diary) {
     throw new NotFound('文章未找到')
   }
+  diary.setDataValue('create_time', formatDate(diary.create_time))
   ctx.body = diary
 })
 
