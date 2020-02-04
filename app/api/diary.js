@@ -52,8 +52,8 @@ router.get('/:id', async ctx => {
 })
 
 router.get('/', GetDiaryValidator, async ctx => {
-  const { start = 0, count = 10 } = ctx.request.query
-  const diarys = await Diary.getAllDiary(start, count)
+  const { start = 0, count = 10, uid } = ctx.request.query
+  const diarys = await Diary.getAllDiary(start, count, uid)
   ctx.body = diarys
 })
 

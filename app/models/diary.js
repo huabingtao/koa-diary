@@ -8,7 +8,16 @@ const { Favor } = require('./favor')
 class Diary extends Model {
   static async getDiary(id, start = 0, count = 10) {
     await User.validatorUser(id)
+    const favors = await Favor.findAll({
+      where: {
+        uid: id
+      }
+    })
+    const diaryIds = favors.map(f => {
+      return f.diary_id
+    })
     const diary = await Diary.findAll({
+      order: [['id', 'DESC']],
       where: {
         uid: id
       },
@@ -17,43 +26,39 @@ class Diary extends Model {
     })
     diary.forEach(item => {
       item.dataValues.create_time = formatDate(item.dataValues.create_time)
+      if (diaryIds.includes(item.id)) {
+        item.dataValues.isFavor = 1
+      } else {
+        item.dataValues.isFavor = 0
+      }
     })
     return diary
   }
 
-  static async getAllDiary(start, count) {
-    function findAllId(list) {
-      let res = []
-      list.forEach(item => {
-        res.push(item.id)
-      })
-      return res
-    }
-
+  static async getAllDiary(start, count, uid) {
     const diary = await Diary.findAll({
+      order: [['id', 'DESC']],
       offset: parseInt(start),
       limit: parseInt(count)
     })
 
-    const diaryIds = findAllId(diary)
-
     const favors = await Favor.findAll({
       where: {
-        diary_id: {
-          [Op.in]: diaryIds
-        }
+        uid
       }
+    })
+
+    const diaryIds = favors.map(f => {
+      return f.diary_id
     })
 
     diary.forEach(item => {
       item.dataValues.create_time = formatDate(item.dataValues.create_time)
-      favors.forEach(f => {
-        if (item.uid === f.uid && item.id === f.diary_id) {
-          item.dataValues.isFavor = 1
-        } else {
-          item.dataValues.isFavor = 0
-        }
-      })
+      if (diaryIds.includes(item.id)) {
+        item.dataValues.isFavor = 1
+      } else {
+        item.dataValues.isFavor = 0
+      }
     })
     return diary
   }
