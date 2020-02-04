@@ -44,6 +44,9 @@ router.get('/:id', async ctx => {
   if (!diary) {
     throw new NotFound('文章未找到')
   }
+  await diary.increment('look_nums', {
+    by: 1
+  })
   diary.setDataValue('create_time', formatDate(diary.create_time))
   ctx.body = diary
 })

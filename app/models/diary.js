@@ -94,6 +94,10 @@ Diary.init(
     favor_nums: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+    look_nums: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     }
   },
   {
