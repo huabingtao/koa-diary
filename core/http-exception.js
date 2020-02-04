@@ -42,10 +42,20 @@ class EmailRepetition extends HttpException {
   }
 }
 
+class LikeError extends HttpException {
+  constructor(msg = '你已经点过赞了', errorCode) {
+    super()
+    this.msg = msg
+    this.code = 402
+    this.errorCode = errorCode || 10004
+  }
+}
+
 module.exports = {
   HttpException,
   ParameterException,
   Success,
   NotFound,
-  EmailRepetition
+  EmailRepetition,
+  LikeError
 }

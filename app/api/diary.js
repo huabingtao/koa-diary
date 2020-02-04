@@ -22,7 +22,8 @@ router.post('/', DiaryValidator, async ctx => {
     uid: id,
     content,
     nickname: user.nickname,
-    create_time: date
+    create_time: date,
+    favor_num: 0
   })
   success()
 })

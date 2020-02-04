@@ -59,9 +59,23 @@ const PutDiaryValidator = async (ctx, next) => {
   await next()
 }
 
+const PostFavorValidator = async (ctx, next) => {
+  const { uid, diary_id } = ctx.request.body
+  let v = validator.isEmpty(uid)
+  if (v) {
+    throw new ParameterException('uid 不能为空')
+  }
+  v = validator.isEmpty(diary_id)
+  if (v) {
+    throw new ParameterException('diary_id 不能为空')
+  }
+  await next()
+}
+
 module.exports = {
   RegisterValidator,
   DiaryValidator,
   GetDiaryValidator,
-  PutDiaryValidator
+  PutDiaryValidator,
+  PostFavorValidator
 }
