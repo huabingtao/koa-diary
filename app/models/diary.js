@@ -6,7 +6,7 @@ const { User } = require('./user')
 const { Favor } = require('./favor')
 
 class Diary extends Model {
-  static async getDiary(id, start = 0, count = 10) {
+  static async getDiary(id, start = 0, count = 100) {
     await User.validatorUser(id)
     const favors = await Favor.findAll({
       where: {
@@ -35,7 +35,7 @@ class Diary extends Model {
     return diary
   }
 
-  static async getAllDiary(start, count, uid) {
+  static async getAllDiary(start = 0, count = 100, uid) {
     const diary = await Diary.findAll({
       order: [['id', 'DESC']],
       offset: parseInt(start),
