@@ -1,12 +1,12 @@
 module.exports = {
   // prod
-  environment: 'dev',
+  environment: "prod",
   database: {
-    dbName: 'remind',
-    host: 'localhost',
+    dbName: "diary",
+    host: "139.196.94.6",
     port: 3306,
-    user: 'root',
-    password: 'hbt223123'
+    user: "root",
+    password: "123123"
   },
-  host: 'http://localhost:3000/'
-}
+  host: "139.196.94.6"
+};
