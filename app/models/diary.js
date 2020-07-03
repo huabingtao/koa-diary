@@ -1,92 +1,107 @@
-const { Model, DataTypes, Op } = require('sequelize')
-const { sequelize } = require('../../core/db')
-const { NotFound } = require('../../core/http-exception')
-const { formatDate } = require('../lib/helper')
-const { User } = require('./user')
-const { Favor } = require('./favor')
+const { Model, DataTypes, Op } = require('sequelize');
+const { sequelize } = require('../../core/db');
+const { NotFound } = require('../../core/http-exception');
+const { formatDate } = require('../lib/helper');
+const { User } = require('./user');
+const { Favor } = require('./favor');
 
 class Diary extends Model {
   static async getDiary(id, start = 0, count = 100) {
-    await User.validatorUser(id)
+    await User.validatorUser(id);
     const favors = await Favor.findAll({
       where: {
-        uid: id
-      }
-    })
-    const diaryIds = favors.map(f => {
-      return f.diary_id
-    })
+        uid: id,
+      },
+    });
+    const diaryIds = favors.map((f) => {
+      return f.diary_id;
+    });
     const diary = await Diary.findAll({
       order: [['id', 'DESC']],
       where: {
-        uid: id
+        uid: id,
       },
       offset: parseInt(start),
-      limit: parseInt(count)
-    })
-    diary.forEach(item => {
-      item.dataValues.create_time = formatDate(item.dataValues.create_time)
+      limit: parseInt(count),
+    });
+    diary.forEach((item) => {
+      item.dataValues.create_time = formatDate(item.dataValues.create_time);
       if (diaryIds.includes(item.id)) {
-        item.dataValues.isFavor = 1
+        item.dataValues.isFavor = 1;
       } else {
-        item.dataValues.isFavor = 0
+        item.dataValues.isFavor = 0;
       }
-    })
-    return diary
+    });
+
+    let p = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('resolve');
+      }, 1000);
+    });
+    p = await p;
+
+    return diary;
   }
 
   static async getAllDiary(start = 0, count = 100, uid) {
     const diary = await Diary.findAll({
       order: [['id', 'DESC']],
       offset: parseInt(start),
-      limit: parseInt(count)
-    })
+      limit: parseInt(count),
+    });
 
     const favors = await Favor.findAll({
       where: {
-        uid
-      }
-    })
+        uid,
+      },
+    });
 
-    const diaryIds = favors.map(f => {
-      return f.diary_id
-    })
+    const diaryIds = favors.map((f) => {
+      return f.diary_id;
+    });
 
-    diary.forEach(item => {
-      item.dataValues.create_time = formatDate(item.dataValues.create_time)
+    diary.forEach((item) => {
+      item.dataValues.create_time = formatDate(item.dataValues.create_time);
       if (diaryIds.includes(item.id)) {
-        item.dataValues.isFavor = 1
+        item.dataValues.isFavor = 1;
       } else {
-        item.dataValues.isFavor = 0
+        item.dataValues.isFavor = 0;
       }
-    })
-    return diary
+    });
+
+    let p = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('resolve');
+      }, 1000);
+    });
+    p = await p;
+    return diary;
   }
 
   static async deleteDiary(uid, id) {
-    await User.validatorUser(uid)
+    await User.validatorUser(uid);
     const diary = await Diary.destroy({
       force: true, // 硬删除
       where: {
-        id
-      }
-    })
-    return diary
+        id,
+      },
+    });
+    return diary;
   }
 
   static async updateDiary(uid, id, content) {
-    await User.validatorUser(uid)
+    await User.validatorUser(uid);
     const diary = await Diary.update(
       {
-        content
+        content,
       },
       {
         where: {
-          id
-        }
+          id,
+        },
       }
-    )
-    return diary
+    );
+    return diary;
   }
 }
 
@@ -98,19 +113,19 @@ Diary.init(
     create_time: DataTypes.DATE,
     favor_nums: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     look_nums: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
-    }
+      defaultValue: 0,
+    },
   },
   {
     sequelize,
-    tableName: 'diary'
+    tableName: 'diary',
   }
-)
+);
 
 module.exports = {
-  Diary
-}
+  Diary,
+};
