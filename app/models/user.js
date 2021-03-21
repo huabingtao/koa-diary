@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-21 14:09:55
+ * @LastEditTime: 2021-03-21 18:53:57
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /koa-diary/app/models/user.js
+ */
 const { Model, DataTypes, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
 const { NotFound } = require('../../core/http-exception')
@@ -21,6 +29,7 @@ class User extends Model {
         email
       }
     })
+    console.log('user:',user);
     if (!user) {
       throw new NotFound('账号不存在')
     }
