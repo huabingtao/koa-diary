@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-06 13:40:27
- * @LastEditTime: 2021-03-21 22:30:09
+ * @LastEditTime: 2021-04-04 17:17:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa-diary/app.js
@@ -20,4 +20,4 @@ app.use(cors())
 app.use(catchError)
 app.use(bodyParser())
 InitManager.initCore(app)
-app.listen(3001)
+app.listen(3000)
