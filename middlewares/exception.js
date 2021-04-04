@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 16:39:41
- * @LastEditTime: 2021-03-21 22:39:08
- * @LastEditors: your name
+ * @LastEditTime: 2021-04-04 16:43:13
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa-diary/middlewares/exception.js
  */
@@ -28,7 +28,7 @@ const catchError = async (ctx, next) => {
       ctx.status = error.code
     } else {
       ctx.body = {
-        message: '服务器发生了点问题请稍后再试',
+        message: '服务器发生了点问题请稍后再试吧',
         errorCode: '9999',
         requestUrl: `${ctx.method} ${ctx.path}`
       }
